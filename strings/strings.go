@@ -2,8 +2,19 @@ package strings
 
 import (
 	"fmt"
+	"mlab/rutils"
+	"mlab/rutils/arrays"
+	strings2 "strings"
 )
 
+// At : Returns the substring of provided position
+//
+//
+// str := "test_string"
+//
+// At(0)      # => "t"
+//
+// At([]int{0, 1})   # => "te"
 func At(str string, pos interface{}) (string, error) {
 	if p, ok := pos.(int); ok {
 		return string(str[p]), nil
@@ -19,6 +30,7 @@ func At(str string, pos interface{}) (string, error) {
 	return "", fmt.Errorf("wrong params")
 }
 
+// Blank :
 func Blank(str string) bool {
 	if len(str) == 0 {
 		return true
@@ -40,4 +52,112 @@ func Blank(str string) bool {
 	}
 }
 
+func Camelize(str string) string {
+	stringsArr := strings2.Split(str, "_")
 
+	if len(stringsArr) == 0 {
+		return str
+	}
+
+	var result string
+	for _, e := range stringsArr {
+		if len(e) == 0 {
+			continue
+		}
+
+		firstLetter := e[0]
+		remainingChars := e[1:]
+
+		result += strings2.ToUpper(string(firstLetter))
+		result += remainingChars
+	}
+
+	return result
+}
+
+func Capitalize(str string) string {
+	if len(str) == 0 {
+		return ""
+	}
+	firstLetter := str[0]
+	remainingChars := str[1:]
+
+	var result string
+	result += strings2.ToUpper(string(firstLetter))
+	result += remainingChars
+
+	return result
+}
+
+func Dasherize(str string) string {
+	return strings2.Replace(str, "_", "-", -1)
+}
+
+func First(str string, selectorArgs ...int) string {
+	if len(str) == 0 {
+		return ""
+	}
+
+	selector := 0
+	if len(selectorArgs) > 0 {
+		selector = selectorArgs[0]
+	} else {
+		return string(str[0])
+	}
+
+	if selector == 0 {
+		return ""
+	} else {
+		if selector > len(str) {
+			return str
+		}
+		return str[:selector]
+	}
+}
+
+func From(str string, selector int) string {
+	if len(str) == 0 || selector > len(str) {
+		return ""
+	}
+
+	if selector < 0 {
+		positiveSelector := rutils.InverseInt(selector)
+		if positiveSelector < len(str) {
+			validSelector := len(str) - positiveSelector
+			return str[validSelector:]
+		} else {
+			return str
+		}
+	}
+
+	return str[selector:]
+}
+
+func Humanize(str string) string {
+	if len(str) == 0 {
+		return ""
+	}
+
+	var result string
+	if str == "_id" {
+		return "Id"
+	}
+
+	str = strings2.Replace(str, "_id", "", -1)
+	stringsArr := strings2.Split(str, "_")
+	arrays.DeleteString(&stringsArr, "")
+
+	for i, e := range stringsArr {
+		if i == 0 {
+			result += Capitalize(e)
+		} else {
+			result += e
+		}
+
+		if i < len(stringsArr)-1 {
+			result += " "
+		}
+	}
+
+	return result
+}
