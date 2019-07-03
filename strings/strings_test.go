@@ -1,7 +1,6 @@
 package strings
 
 import (
-	// strings "mlab/rutils/strings"
 	"testing"
 )
 
@@ -34,6 +33,28 @@ func TestAt(t *testing.T) {
 		if err == nil {
 			t.Errorf("test [%v] failed with params(initialString: %v, selector %v), expected error got %v",
 				k, v.initialStr, v.selector, err)
+		}
+	}
+}
+
+func TestBlank(t *testing.T) {
+	type testData struct {
+		initialStr string
+		response   bool
+	}
+
+	examples := map[string]testData{
+		"empty string":                           testData{initialStr: "", response: true},
+		"empty string with multiple whitespaces": testData{initialStr: "      ", response: true},
+		"non empty string": testData{initialStr: "bfhdjsbfhdjs", response: false},
+		"non empty string with whitespaces": testData{initialStr: "     bfhdjsbfhdjs", response: false},
+		"non empty string with whitespaces at the end": testData{initialStr: "bfhdjsbfhdjs     ", response: false},
+	}
+
+	for k, v := range examples {
+		resp := Blank(v.initialStr)
+		if v.response != resp {
+			t.Errorf("test [%v] failed, expected %v got %v", k, v.response, resp)
 		}
 	}
 }

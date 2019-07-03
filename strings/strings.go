@@ -18,3 +18,26 @@ func At(str string, pos interface{}) (string, error) {
 	}
 	return "", fmt.Errorf("wrong params")
 }
+
+func Blank(str string) bool {
+	if len(str) == 0 {
+		return true
+	}
+
+	notBlank := false
+
+	for _, s := range str {
+		if string(s) != " " {
+			notBlank = true
+			break
+		}
+	}
+
+	if notBlank {
+		return false
+	} else {
+		return true
+	}
+}
+
+
