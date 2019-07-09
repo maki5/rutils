@@ -8,7 +8,7 @@ import (
 	"unicode"
 )
 
-// At : Returns the substring of provided position
+//At returns the substring of provided position
 //
 //
 // str := "test_string"
@@ -31,28 +31,22 @@ func At(str string, pos interface{}) (string, error) {
 	return "", fmt.Errorf("wrong params")
 }
 
-// Blank :
+// Blank checks if string is empty, in case string contains only whitespaces it will be considered empty
 func Blank(str string) bool {
 	if len(str) == 0 {
 		return true
 	}
 
-	notBlank := false
-
 	for _, s := range str {
 		if string(s) != " " {
-			notBlank = true
-			break
+			return false
 		}
 	}
 
-	if notBlank {
-		return false
-	} else {
-		return true
-	}
+	return true
 }
 
+// Camelize converts snake_case string into CamelCase
 func Camelize(str string) string {
 	stringsArr := strings2.Split(str, "_")
 
@@ -76,6 +70,7 @@ func Camelize(str string) string {
 	return result
 }
 
+// Capitalize returns copy of string with first capital letter
 func Capitalize(str string) string {
 	if len(str) == 0 {
 		return ""
@@ -90,10 +85,12 @@ func Capitalize(str string) string {
 	return result
 }
 
+// Dasherize converts snake_case string to dash-case
 func Dasherize(str string) string {
 	return strings2.Replace(str, "_", "-", -1)
 }
 
+// First returns the first character. If a limit is supplied, returns a substring from the beginning of the string until it reaches the limit value. If the given limit is greater than or equal to the string length, returns a copy of self.
 func First(str string, selectorArgs ...int) string {
 	if len(str) == 0 {
 		return ""
@@ -108,14 +105,15 @@ func First(str string, selectorArgs ...int) string {
 
 	if selector == 0 {
 		return ""
-	} else {
-		if selector > len(str) {
-			return str
-		}
-		return str[:selector]
 	}
+
+	if selector > len(str) {
+		return str
+	}
+	return str[:selector]
 }
 
+// From returns a substring from the given position to the end of the string. If the position is negative, it is counted from the end of the string.
 func From(str string, selector int) string {
 	if len(str) == 0 || selector > len(str) {
 		return ""
@@ -126,14 +124,15 @@ func From(str string, selector int) string {
 		if positiveSelector < len(str) {
 			validSelector := len(str) - positiveSelector
 			return str[validSelector:]
-		} else {
-			return str
 		}
+
+		return str
 	}
 
 	return str[selector:]
 }
 
+// Humanize capitalizes the first word, turns underscores into spaces, and strips a trailing '_id' if present
 func Humanize(str string) string {
 	if len(str) == 0 {
 		return ""
@@ -163,6 +162,7 @@ func Humanize(str string) string {
 	return result
 }
 
+// Last returns the last character of the string. If a limit is supplied, returns a substring from the end of the string until it reaches the limit value (counting backwards). If the given limit is greater than or equal to the string length, returns a copy of self.
 func Last(str string, selectorArgs ...int) string {
 	if len(str) == 0 {
 		return ""
@@ -177,13 +177,15 @@ func Last(str string, selectorArgs ...int) string {
 
 	if selector == 0 {
 		return ""
-	} else {
-		if selector > len(str) {
-			return str
-		}
-		selector = len(str) - selector
-		return str[selector:]
 	}
+
+	if selector > len(str) {
+		return str
+	}
+
+	selector = len(str) - selector
+	return str[selector:]
+
 }
 
 // func Pluralize(str string) string {
@@ -208,6 +210,7 @@ func Last(str string, selectorArgs ...int) string {
 // 	return str
 // }
 
+// SnakeCase converts CamelCase to snake_case
 func SnakeCase(str string) string {
 	wordsArr := make([]string, 0)
 	word := make([]rune, 0)
@@ -237,6 +240,7 @@ func SnakeCase(str string) string {
 	return result
 }
 
+// HasOnlyLetters checks if string has only letters
 func HasOnlyLetters(str string) bool {
 	if Blank(str) {
 		return false
@@ -250,6 +254,7 @@ func HasOnlyLetters(str string) bool {
 	return true
 }
 
+// Insert inserts given string after charachter at the given index
 func Insert(str string, index int, strToInsert string) string {
 	if Blank(str) {
 		if len(str) < index {
@@ -270,6 +275,7 @@ func Insert(str string, index int, strToInsert string) string {
 	return result
 }
 
+// Reverse reverses given string
 func Reverse(str string) string {
 	if Blank(str) {
 		return str
