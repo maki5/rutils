@@ -144,8 +144,8 @@ func Humanize(str string) string {
 	}
 
 	str = strings2.Replace(str, "_id", "", -1)
-	stringsArr := strings2.Split(str, "_")
-	arrayOfStrings.DeleteString(&stringsArr, "")
+	stringsArr := arrayOfStrings.StringArray(strings2.Split(str, "_"))
+	stringsArr.Delete("")
 
 	for i, e := range stringsArr {
 		if i == 0 {

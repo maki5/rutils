@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestDeleteString(t *testing.T) {
+func TestDelete(t *testing.T) {
 	type testData struct {
 		arr      []string
 		selector string
@@ -24,21 +24,21 @@ func TestDeleteString(t *testing.T) {
 	}
 
 	for k, v := range examples {
-		initialArr := v.arr
+		initialArr := StringArray(v.arr)
 
-		DeleteString(&initialArr, v.selector)
-		if !reflect.DeepEqual(initialArr, v.response) {
-			t.Errorf("test [%v] failed on method DeleteString with params(initialArr: %v, selector %v), expected %v got %v",
+		initialArr.Delete(v.selector)
+		if !reflect.DeepEqual([]string(initialArr), v.response) {
+			t.Errorf("test [%v] failed on method Delete with params(initialArr: %v, selector %v), expected %v got %v",
 				k, v.arr, v.selector, v.response, initialArr)
 		}
 	}
 
 	for k, v := range badExamples {
-		initialArr := v.arr
+		initialArr := StringArray(v.arr)
 
-		DeleteString(&initialArr, v.selector)
-		if reflect.DeepEqual(initialArr, v.response) {
-			t.Errorf("test [%v] failed on method DeleteString with params(initialArr: %v, selector %v), expected to not be %v",
+		initialArr.Delete(v.selector)
+		if reflect.DeepEqual([]string(initialArr), v.response) {
+			t.Errorf("test [%v] failed on method Delete with params(initialArr: %v, selector %v), expected to not be %v",
 				k, v.arr, v.selector, v.response)
 		}
 	}
@@ -59,7 +59,8 @@ func TestContains(t *testing.T) {
 	}
 
 	for k, v := range examples {
-		resp := Contains(&v.arr, v.selector)
+		arr := StringArray(v.arr)
+		resp := arr.Contains(v.selector)
 		if v.response != resp {
 			t.Errorf("test [%v] failed on method Contains with params(initialArr: %v, selector %v), expected %v got %v",
 				k, v.arr, v.selector, v.response, resp)
@@ -79,9 +80,9 @@ func TestClear(t *testing.T) {
 	}
 
 	for k, v := range examples {
-		initialArr := v.arr
+		initialArr := StringArray(v.arr)
 
-		Clear(&initialArr)
+		initialArr.Clear()
 		arrLen := len(initialArr)
 		if arrLen > 0 {
 			t.Errorf("test [%v] failed on method Clear with params(initialArr: %v), expected length to be 0 got %v",
@@ -116,7 +117,8 @@ func TestCollect(t *testing.T) {
 	}
 
 	for k, v := range examples {
-		newArr := Collect(&v.arr, v.execFunc)
+		arr := StringArray(v.arr)
+		newArr := arr.Collect(v.execFunc)
 
 		if !reflect.DeepEqual(newArr, v.response) {
 			t.Errorf("test [%v] failed on method Collect with params(initialArr: %v), expected to be %v got %v",
@@ -138,10 +140,10 @@ func TestCompact(t *testing.T) {
 	}
 
 	for k, v := range examples {
-		initialArr := v.arr
-		Compact(&initialArr)
+		initialArr := StringArray(v.arr)
+		initialArr.Compact()
 
-		if !reflect.DeepEqual(initialArr, v.response) {
+		if !reflect.DeepEqual([]string(initialArr), v.response) {
 			t.Errorf("test [%v] failed on method Collect with params(initialArr: %v), expected to be %v got %v",
 				k, v.arr, v.response, initialArr)
 		}
