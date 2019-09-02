@@ -71,3 +71,168 @@ func (arr *StringArray) Compact() {
 
 	*arr = newArr
 }
+
+// Concat append elements of other arryas to self
+func (arr *StringArray) Concat(arrays ...[]string) {
+	if len(arrays) == 0 {
+		return
+	}
+
+	newArr := []string(*arr)
+
+	for _, a := range arrays {
+		newArr = append(newArr, a...)
+	}
+
+	*arr = newArr
+}
+
+// Index return index of first matched string in array if not found return -1
+func (arr *StringArray) Index(str string) int {
+	if len(*arr) == 0 || rutils.Blank(str) {
+		return -1
+	}
+
+	newArr := []string(*arr)
+
+	for i, el := range newArr {
+		if el == str {
+			return i
+		}
+	}
+	return -1
+}
+
+// Map return new array contained values returned by the provided function
+func (arr *StringArray) Map(exec func(el string) string) []string {
+	return arr.Collect(exec)
+}
+
+// Min return min string
+func (arr *StringArray) Min() string {
+	if len(*arr) == 0 {
+		return ""
+	}
+
+	newArr := []string(*arr)
+
+	var min = newArr[0]
+
+	for _, el := range newArr {
+		if len(el) < len(min) {
+			min = el
+		} else if len(el) == len(min) {
+			if stringWeight(el) < stringWeight(min) {
+				min = el
+			}
+		}
+	}
+
+	return min
+}
+
+// Max return max string
+func (arr *StringArray) Max() string {
+	if len(*arr) == 0 {
+		return ""
+	}
+
+	newArr := []string(*arr)
+
+	var max = newArr[0]
+
+	for _, el := range newArr {
+		if len(el) > len(max) {
+			max = el
+		} else if len(el) == len(max) {
+			if stringWeight(el) > stringWeight(max) {
+				max = el
+			}
+		}
+	}
+	return max
+}
+
+// Pop removes last element from array and returns it
+func (arr *StringArray) Pop(args ...int) string {
+	if len(*arr) == 0 {
+		return ""
+	}
+
+	n := 1
+	var last string
+	var newArr []string
+
+	if len(args) > 0 {
+		n = args[0]
+		if len(*arr) < n {
+			return ""
+		}
+	}
+
+	for i := 0; i < n; i++ {
+		newArr = []string(*arr)
+		last = newArr[len(newArr)-1]
+		arr.Delete(last)
+	}
+
+	return last
+}
+
+// Push append element to array
+func (arr *StringArray) Push(str string) {
+	newArr := []string(*arr)
+	newArr = append(newArr, str)
+	*arr = newArr
+}
+
+// Select returns a new array containing all elements of array for which the given block returns true
+func (arr *StringArray) Select(exec func(str string) bool) []string {
+	if len(*arr) == 0 {
+		return []string{}
+	}
+
+	newArr := []string(*arr)
+	resArr := make([]string, 0, 0)
+
+	for _, el := range newArr {
+		if exec(el) {
+			resArr = append(resArr, el)
+		}
+	}
+
+	return resArr
+}
+
+// Uniq removes duplicated elements form given array
+func (arr *StringArray) Uniq() {
+	if len(*arr) == 0 {
+		return
+	}
+
+	newArr := []string(*arr)
+	strMap := make(map[string]int)
+
+	for _, el := range newArr {
+		// value doesn't matter here cause we collect just keys
+		strMap[el] = 1
+	}
+
+	resArr := make([]string, 0, 0)
+	for k := range strMap {
+		resArr = append(resArr, k)
+	}
+
+	*arr = resArr
+}
+
+// internal functions
+func stringWeight(str string) int {
+	sum := 0
+
+	for _, el := range str {
+		sum += int(el)
+	}
+
+	return sum
+}
