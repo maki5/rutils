@@ -1,5 +1,9 @@
 package arrays
 
+import (
+	"mlab/rutils"
+)
+
 // DeleteString : deletes string element from array of strings
 func DeleteString(arr *[]string, elem string) {
 	// original version got form https://yourbasic.org/golang/delete-element-slice/
@@ -21,6 +25,7 @@ func DeleteString(arr *[]string, elem string) {
 	}
 }
 
+// Contains checks if array of strings contains provided string
 func Contains(arr *[]string, elem string) bool {
 	if len(*arr) == 0 {
 		return false
@@ -35,8 +40,32 @@ func Contains(arr *[]string, elem string) bool {
 	return false
 }
 
+// Clear remove all elements from array of strings
 func Clear(arr *[]string) {
 	newArr := *arr
-	newArr = newArr[:0]
-	arr = &newArr
+	*arr = newArr[:0]
+}
+
+// Collect return new array contained values returned by the provided function
+func Collect(arr *[]string, exec func(el string) string) []string {
+	newArr := make([]string, 0, 0)
+
+	for _, e := range *arr {
+		newArr = append(newArr, exec(e))
+	}
+
+	return newArr
+}
+
+// Compact removes all empty elements from given array
+func Compact(arr *[]string) {
+	newArr := make([]string, 0, 0)
+
+	for _, e := range *arr {
+		if !rutils.Blank(e) {
+			newArr = append(newArr, e)
+		}
+	}
+
+	*arr = newArr
 }
