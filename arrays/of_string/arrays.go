@@ -72,7 +72,7 @@ func (arr *StringArray) Compact() {
 	*arr = newArr
 }
 
-// Concat append elements of other arryas to self
+// Concat append elements of other arrays to self
 func (arr *StringArray) Concat(arrays ...[]string) {
 	if len(arrays) == 0 {
 		return
@@ -88,15 +88,15 @@ func (arr *StringArray) Concat(arrays ...[]string) {
 }
 
 // Index return index of first matched string in array if not found return -1
-func (arr *StringArray) Index(str string) int {
-	if len(*arr) == 0 || rutils.Blank(str) {
+func (arr *StringArray) Index(elem string) int {
+	if len(*arr) == 0 || rutils.Blank(elem) {
 		return -1
 	}
 
 	newArr := []string(*arr)
 
 	for i, el := range newArr {
-		if el == str {
+		if el == elem {
 			return i
 		}
 	}
@@ -180,14 +180,14 @@ func (arr *StringArray) Pop(args ...int) string {
 }
 
 // Push append element to array
-func (arr *StringArray) Push(str string) {
+func (arr *StringArray) Push(elem string) {
 	newArr := []string(*arr)
-	newArr = append(newArr, str)
+	newArr = append(newArr, elem)
 	*arr = newArr
 }
 
 // Select returns a new array containing all elements of array for which the given block returns true
-func (arr *StringArray) Select(exec func(str string) bool) []string {
+func (arr *StringArray) Select(exec func(elem string) bool) []string {
 	if len(*arr) == 0 {
 		return []string{}
 	}
