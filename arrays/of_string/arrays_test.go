@@ -1,10 +1,10 @@
 package arrays
 
 import (
+	"mlab/rutils"
 	"reflect"
+	"sort"
 	"testing"
-
-	"github.com/maki5/rutils"
 )
 
 func TestDelete(t *testing.T) {
@@ -351,11 +351,233 @@ func TestUniq(t *testing.T) {
 
 		initialArr.Uniq()
 
+		sort.Strings([]string(initialArr))
+		sort.Strings(v.response)
+
 		if !reflect.DeepEqual([]string(initialArr), v.response) {
 			t.Errorf("test [%v] failed on method Uniq with params(initialArr: %v), expected to be %v got %v",
 				k, v.arr, v.response, initialArr)
 		}
 
+	}
+
+}
+
+func TestToStringArray(t *testing.T) {
+	type testData struct {
+		arr      []string
+		response []string
+		err      error
+	}
+
+	examples := map[string]testData{
+		"empty arr":         testData{arr: []string{}, response: []string{}, err: nil},
+		"just one element":  testData{arr: []string{"1"}, response: []string{"1"}, err: nil},
+		"multiple elements": testData{arr: []string{"2", "3", "1"}, response: []string{"2", "3", "1"}, err: nil},
+	}
+
+	for k, v := range examples {
+		initialArr := StringArray(v.arr)
+
+		resArr, err := initialArr.ToStringArray()
+
+		if resArr == nil || !reflect.DeepEqual(*resArr, v.response) || err != v.err {
+			t.Errorf("test [%v] failed on method ToStringArray with params(initialArr: %v), expected to be %v got %v and error to be %v got %v",
+				k, v.arr, v.response, *resArr, v.err, err)
+		}
+
+	}
+}
+
+func TestToFloat64Array(t *testing.T) {
+	type testData struct {
+		arr      []string
+		response []float64
+		err      error
+	}
+
+	examples := map[string]testData{
+		"empty arr":         testData{arr: []string{}, response: []float64{}, err: nil},
+		"just one element":  testData{arr: []string{"1"}, response: []float64{1}, err: nil},
+		"multiple elements": testData{arr: []string{"2", "3", "1"}, response: []float64{2, 3, 1}, err: nil},
+	}
+
+	for k, v := range examples {
+		initialArr := StringArray(v.arr)
+
+		resArr, err := initialArr.ToFloat64Array()
+
+		if resArr == nil || !reflect.DeepEqual(*resArr, v.response) || err != v.err {
+			t.Errorf("test [%v] failed on method ToFloat64Array with params(initialArr: %v), expected to be %v got %v and error to be %v got %v",
+				k, v.arr, v.response, *resArr, v.err, err)
+		}
+
+	}
+}
+
+func TestToFloat32Array(t *testing.T) {
+	type testData struct {
+		arr      []string
+		response []float32
+		err      error
+	}
+
+	examples := map[string]testData{
+		"empty arr":         testData{arr: []string{}, response: []float32{}, err: nil},
+		"just one element":  testData{arr: []string{"1"}, response: []float32{1}, err: nil},
+		"multiple elements": testData{arr: []string{"2", "3", "1"}, response: []float32{2, 3, 1}, err: nil},
+	}
+
+	for k, v := range examples {
+		initialArr := StringArray(v.arr)
+
+		resArr, err := initialArr.ToFloat32Array()
+
+		if resArr == nil || !reflect.DeepEqual(*resArr, v.response) || err != v.err {
+			t.Errorf("test [%v] failed on method ToFloat32Array with params(initialArr: %v), expected to be %v got %v and error to be %v got %v",
+				k, v.arr, v.response, *resArr, v.err, err)
+		}
+
+	}
+}
+
+func TestToInt64Array(t *testing.T) {
+	type testData struct {
+		arr      []string
+		response []int64
+		err      error
+	}
+
+	examples := map[string]testData{
+		"empty arr":         testData{arr: []string{}, response: []int64{}, err: nil},
+		"just one element":  testData{arr: []string{"1"}, response: []int64{1}, err: nil},
+		"multiple elements": testData{arr: []string{"2", "3", "1"}, response: []int64{2, 3, 1}, err: nil},
+	}
+
+	for k, v := range examples {
+		initialArr := StringArray(v.arr)
+
+		resArr, err := initialArr.ToInt64Array()
+
+		if resArr == nil || !reflect.DeepEqual(*resArr, v.response) || err != v.err {
+			t.Errorf("test [%v] failed on method ToInt64Array with params(initialArr: %v), expected to be %v got %v and error to be %v got %v",
+				k, v.arr, v.response, *resArr, v.err, err)
+		}
+	}
+}
+
+func TestToInt32Array(t *testing.T) {
+	type testData struct {
+		arr      []string
+		response []int32
+		err      error
+	}
+
+	examples := map[string]testData{
+		"empty arr":         testData{arr: []string{}, response: []int32{}, err: nil},
+		"just one element":  testData{arr: []string{"1"}, response: []int32{1}, err: nil},
+		"multiple elements": testData{arr: []string{"2", "3", "1"}, response: []int32{2, 3, 1}, err: nil},
+	}
+
+	for k, v := range examples {
+		initialArr := StringArray(v.arr)
+
+		resArr, err := initialArr.ToInt32Array()
+
+		if resArr == nil || !reflect.DeepEqual(*resArr, v.response) || err != v.err {
+			t.Errorf("test [%v] failed on method ToInt32Array with params(initialArr: %v), expected to be %v got %v and error to be %v got %v",
+				k, v.arr, v.response, *resArr, v.err, err)
+		}
+	}
+}
+
+func TestToUintArray(t *testing.T) {
+	type testData struct {
+		arr      []string
+		response []uint
+		err      error
+	}
+
+	examples := map[string]testData{
+		"empty arr":         testData{arr: []string{}, response: []uint{}, err: nil},
+		"just one element":  testData{arr: []string{"1"}, response: []uint{1}, err: nil},
+		"multiple elements": testData{arr: []string{"2", "3", "1"}, response: []uint{2, 3, 1}, err: nil},
+	}
+
+	for k, v := range examples {
+		initialArr := StringArray(v.arr)
+
+		resArr, err := initialArr.ToUintArray()
+
+		if resArr == nil || !reflect.DeepEqual(*resArr, v.response) || err != v.err {
+			t.Errorf("test [%v] failed on method ToUintArray with params(initialArr: %v), expected to be %v got %v and error to be %v got %v",
+				k, v.arr, v.response, *resArr, v.err, err)
+		}
+	}
+}
+
+func TestToUint32Array(t *testing.T) {
+	type testData struct {
+		arr      []string
+		response []uint32
+		err      error
+	}
+
+	examples := map[string]testData{
+		"empty arr":         testData{arr: []string{}, response: []uint32{}, err: nil},
+		"just one element":  testData{arr: []string{"1"}, response: []uint32{1}, err: nil},
+		"multiple elements": testData{arr: []string{"2", "3", "1"}, response: []uint32{2, 3, 1}, err: nil},
+	}
+
+	for k, v := range examples {
+		initialArr := StringArray(v.arr)
+
+		resArr, err := initialArr.ToUint32Array()
+
+		if resArr == nil || !reflect.DeepEqual(*resArr, v.response) || err != v.err {
+			t.Errorf("test [%v] failed on method ToUint32Array with params(initialArr: %v), expected to be %v got %v and error to be %v got %v",
+				k, v.arr, v.response, *resArr, v.err, err)
+		}
+	}
+}
+
+func TestToUint64Array(t *testing.T) {
+	type testData struct {
+		arr      []string
+		response []uint64
+		err      error
+	}
+
+	examples := map[string]testData{
+		"empty arr":         testData{arr: []string{}, response: []uint64{}, err: nil},
+		"just one element":  testData{arr: []string{"1"}, response: []uint64{1}, err: nil},
+		"multiple elements": testData{arr: []string{"2", "3", "1"}, response: []uint64{2, 3, 1}, err: nil},
+	}
+
+	for k, v := range examples {
+		initialArr := StringArray(v.arr)
+
+		resArr, err := initialArr.ToUint64Array()
+
+		if resArr == nil || !reflect.DeepEqual(*resArr, v.response) || err != v.err {
+			t.Errorf("test [%v] failed on method ToUint64Array with params(initialArr: %v), expected to be %v got %v and error to be %v got %v",
+				k, v.arr, v.response, *resArr, v.err, err)
+		}
+	}
+}
+
+func TestToJson(t *testing.T) {
+	arr := []string{"2", "3", "4"}
+	response := `["2","3","4"]`
+	var errResp error
+
+	initialArr := StringArray(arr)
+
+	jsonStr, err := initialArr.ToJSON()
+
+	if jsonStr != response || err != errResp {
+		t.Errorf("test failed on method ToJSON with params(initialArr: %v), expected to be %v got %v and error to be %v got %v",
+			arr, response, jsonStr, errResp, err)
 	}
 
 }

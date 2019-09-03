@@ -1,7 +1,9 @@
 package arrays
 
 import (
+	"encoding/json"
 	"mlab/rutils"
+	"strconv"
 )
 
 type StringArray []string
@@ -78,13 +80,10 @@ func (arr *StringArray) Concat(arrays ...[]string) {
 		return
 	}
 
-	newArr := []string(*arr)
-
 	for _, a := range arrays {
-		newArr = append(newArr, a...)
+		*arr = append(*arr, a...)
 	}
 
-	*arr = newArr
 }
 
 // Index return index of first matched string in array if not found return -1
@@ -93,9 +92,7 @@ func (arr *StringArray) Index(elem string) int {
 		return -1
 	}
 
-	newArr := []string(*arr)
-
-	for i, el := range newArr {
+	for i, el := range *arr {
 		if el == elem {
 			return i
 		}
@@ -181,9 +178,8 @@ func (arr *StringArray) Pop(args ...int) string {
 
 // Push append element to array
 func (arr *StringArray) Push(elem string) {
-	newArr := []string(*arr)
-	newArr = append(newArr, elem)
-	*arr = newArr
+	*arr = append(*arr, elem)
+
 }
 
 // Select returns a new array containing all elements of array for which the given block returns true
@@ -192,10 +188,9 @@ func (arr *StringArray) Select(exec func(elem string) bool) []string {
 		return []string{}
 	}
 
-	newArr := []string(*arr)
 	resArr := make([]string, 0, 0)
 
-	for _, el := range newArr {
+	for _, el := range *arr {
 		if exec(el) {
 			resArr = append(resArr, el)
 		}
@@ -210,10 +205,9 @@ func (arr *StringArray) Uniq() {
 		return
 	}
 
-	newArr := []string(*arr)
 	strMap := make(map[string]int)
 
-	for _, el := range newArr {
+	for _, el := range *arr {
 		// value doesn't matter here cause we collect just keys
 		strMap[el] = 1
 	}
@@ -224,6 +218,122 @@ func (arr *StringArray) Uniq() {
 	}
 
 	*arr = resArr
+}
+
+// ToStringArray implements Convertible for converting to string array
+func (arr *StringArray) ToStringArray() (*[]string, error) {
+	newArr := []string(*arr)
+	return &newArr, nil
+}
+
+// ToFloat64Array implements Convertible for converting to float32 array
+func (arr *StringArray) ToFloat64Array() (*[]float64, error) {
+	newArr := make([]float64, 0, 0)
+
+	for _, el := range *arr {
+		f, err := strconv.ParseFloat(el, 64)
+		if err != nil {
+			return nil, err
+		}
+		newArr = append(newArr, f)
+	}
+	return &newArr, nil
+}
+
+// ToFloat32Array implements Convertible for converting to float32 array
+func (arr *StringArray) ToFloat32Array() (*[]float32, error) {
+	newArr := make([]float32, 0, 0)
+
+	for _, el := range *arr {
+		f, err := strconv.ParseFloat(el, 64)
+		if err != nil {
+			return nil, err
+		}
+		newArr = append(newArr, float32(f))
+	}
+	return &newArr, nil
+}
+
+// ToInt64Array implements Convertible for converting to int64 array
+func (arr *StringArray) ToInt64Array() (*[]int64, error) {
+	newArr := make([]int64, 0, 0)
+
+	for _, el := range *arr {
+		i, err := strconv.ParseInt(el, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+
+		newArr = append(newArr, i)
+	}
+	return &newArr, nil
+}
+
+// ToInt32Array implements Convertible for converting to int32 array
+func (arr *StringArray) ToInt32Array() (*[]int32, error) {
+	newArr := make([]int32, 0, 0)
+
+	for _, el := range *arr {
+		i, err := strconv.ParseInt(el, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+
+		newArr = append(newArr, int32(i))
+	}
+	return &newArr, nil
+}
+
+// ToUintArray implements Convertible for converting to uint array
+func (arr *StringArray) ToUintArray() (*[]uint, error) {
+	newArr := make([]uint, 0, 0)
+
+	for _, el := range *arr {
+		i, err := strconv.ParseUint(el, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		newArr = append(newArr, uint(i))
+	}
+	return &newArr, nil
+}
+
+// ToUint32Array implements Convertible for converting to uint32 array
+func (arr *StringArray) ToUint32Array() (*[]uint32, error) {
+	newArr := make([]uint32, 0, 0)
+
+	for _, el := range *arr {
+		i, err := strconv.ParseUint(el, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		newArr = append(newArr, uint32(i))
+	}
+	return &newArr, nil
+}
+
+// ToUint64Array implements Convertible for converting to uint64 array
+func (arr *StringArray) ToUint64Array() (*[]uint64, error) {
+	newArr := make([]uint64, 0, 0)
+
+	for _, el := range *arr {
+		i, err := strconv.ParseUint(el, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		newArr = append(newArr, i)
+	}
+	return &newArr, nil
+}
+
+// ToJSON implements Convertible for converting to json string
+func (arr *StringArray) ToJSON() (string, error) {
+	data, err := json.Marshal(*arr)
+	if err != nil {
+		return "", err
+	}
+
+	return string(data), nil
 }
 
 // internal functions

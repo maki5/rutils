@@ -1,5 +1,10 @@
 package arrays
 
+import (
+	"encoding/json"
+	"strconv"
+)
+
 type IntArray []int
 
 // Delete deletes int element from array of ints
@@ -60,13 +65,10 @@ func (arr *IntArray) Concat(arrays ...[]int) {
 		return
 	}
 
-	newArr := []int(*arr)
-
 	for _, a := range arrays {
-		newArr = append(newArr, a...)
+		*arr = append(*arr, a...)
 	}
 
-	*arr = newArr
 }
 
 // Index return index of first matched int in array if not found return nil
@@ -75,9 +77,7 @@ func (arr *IntArray) Index(elem int) *int {
 		return nil
 	}
 
-	newArr := []int(*arr)
-
-	for i, el := range newArr {
+	for i, el := range *arr {
 		if el == elem {
 			return &i
 		}
@@ -155,9 +155,7 @@ func (arr *IntArray) Pop(args ...int) *int {
 
 // Push append element to array
 func (arr *IntArray) Push(elem int) {
-	newArr := []int(*arr)
-	newArr = append(newArr, elem)
-	*arr = newArr
+	*arr = append(*arr, elem)
 }
 
 // Select returns a new array containing all elements of array for which the given block returns true
@@ -166,10 +164,9 @@ func (arr *IntArray) Select(exec func(str int) bool) []int {
 		return []int{}
 	}
 
-	newArr := []int(*arr)
 	resArr := make([]int, 0, 0)
 
-	for _, el := range newArr {
+	for _, el := range *arr {
 		if exec(el) {
 			resArr = append(resArr, el)
 		}
@@ -184,10 +181,9 @@ func (arr *IntArray) Uniq() {
 		return
 	}
 
-	newArr := []int(*arr)
 	strMap := make(map[int]int)
 
-	for _, el := range newArr {
+	for _, el := range *arr {
 		// value doesn't matter here cause we collect just keys
 		strMap[el] = 1
 	}
@@ -198,4 +194,94 @@ func (arr *IntArray) Uniq() {
 	}
 
 	*arr = resArr
+}
+
+// ToStringArray implements Convertible for converting to string array
+func (arr *IntArray) ToStringArray() (*[]string, error) {
+	newArr := make([]string, 0, 0)
+
+	for _, el := range *arr {
+		newArr = append(newArr, strconv.Itoa(el))
+	}
+	return &newArr, nil
+}
+
+// ToFloat64Array implements Convertible for converting to float32 array
+func (arr *IntArray) ToFloat64Array() (*[]float64, error) {
+	newArr := make([]float64, 0, 0)
+
+	for _, el := range *arr {
+		newArr = append(newArr, float64(el))
+	}
+	return &newArr, nil
+}
+
+// ToFloat32Array implements Convertible for converting to float32 array
+func (arr *IntArray) ToFloat32Array() (*[]float32, error) {
+	newArr := make([]float32, 0, 0)
+
+	for _, el := range *arr {
+		newArr = append(newArr, float32(el))
+	}
+	return &newArr, nil
+}
+
+// ToInt64Array implements Convertible for converting to int64 array
+func (arr *IntArray) ToInt64Array() (*[]int64, error) {
+	newArr := make([]int64, 0, 0)
+
+	for _, el := range *arr {
+		newArr = append(newArr, int64(el))
+	}
+	return &newArr, nil
+}
+
+// ToInt32Array implements Convertible for converting to int32 array
+func (arr *IntArray) ToInt32Array() (*[]int32, error) {
+	newArr := make([]int32, 0, 0)
+
+	for _, el := range *arr {
+		newArr = append(newArr, int32(el))
+	}
+	return &newArr, nil
+}
+
+// ToUintArray implements Convertible for converting to uint array
+func (arr *IntArray) ToUintArray() (*[]uint, error) {
+	newArr := make([]uint, 0, 0)
+
+	for _, el := range *arr {
+		newArr = append(newArr, uint(el))
+	}
+	return &newArr, nil
+}
+
+// ToUint32Array implements Convertible for converting to uint32 array
+func (arr *IntArray) ToUint32Array() (*[]uint32, error) {
+	newArr := make([]uint32, 0, 0)
+
+	for _, el := range *arr {
+		newArr = append(newArr, uint32(el))
+	}
+	return &newArr, nil
+}
+
+// ToUint64Array implements Convertible for converting to uint64 array
+func (arr *IntArray) ToUint64Array() (*[]uint64, error) {
+	newArr := make([]uint64, 0, 0)
+
+	for _, el := range *arr {
+		newArr = append(newArr, uint64(el))
+	}
+	return &newArr, nil
+}
+
+// ToJSON implements Convertible for converting to json string
+func (arr *IntArray) ToJSON() (string, error) {
+	data, err := json.Marshal(*arr)
+	if err != nil {
+		return "", err
+	}
+
+	return string(data), nil
 }
