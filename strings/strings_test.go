@@ -113,13 +113,13 @@ func TestFirst(t *testing.T) {
 	}
 
 	examples := map[string]testData{
-		"empty string":                       testData{initialStr: "", response: ""},
-		"first without selector":             testData{initialStr: "hello", response: "h"},
-		"first with selector":                testData{initialStr: "hello", selector: utils.IntPtr(1), response: "h"},
-		"first two":                          testData{initialStr: "hello", selector: utils.IntPtr(2), response: "he"},
-		"zero":                               testData{initialStr: "hello", selector: utils.IntPtr(0), response: ""},
-		"all":                                testData{initialStr: "hello", selector: utils.IntPtr(6), response: "hello"},
-		"selector bigger then intial string": testData{initialStr: "hello", selector: utils.IntPtr(7), response: "hello"},
+		"empty string":                        testData{initialStr: "", response: ""},
+		"first without selector":              testData{initialStr: "hello", response: "h"},
+		"first with selector":                 testData{initialStr: "hello", selector: utils.IntPtr(1), response: "h"},
+		"first two":                           testData{initialStr: "hello", selector: utils.IntPtr(2), response: "he"},
+		"zero":                                testData{initialStr: "hello", selector: utils.IntPtr(0), response: ""},
+		"all":                                 testData{initialStr: "hello", selector: utils.IntPtr(6), response: "hello"},
+		"selector bigger then initial string": testData{initialStr: "hello", selector: utils.IntPtr(7), response: "hello"},
 	}
 
 	for k, v := range examples {
@@ -195,13 +195,13 @@ func TestLast(t *testing.T) {
 	}
 
 	examples := map[string]testData{
-		"empty string":                       testData{initialStr: "", response: ""},
-		"last without selector":              testData{initialStr: "hello", response: "o"},
-		"last with selector":                 testData{initialStr: "hello", selector: utils.IntPtr(1), response: "o"},
-		"last two":                           testData{initialStr: "hello", selector: utils.IntPtr(2), response: "lo"},
-		"zero":                               testData{initialStr: "hello", selector: utils.IntPtr(0), response: ""},
-		"all":                                testData{initialStr: "hello", selector: utils.IntPtr(6), response: "hello"},
-		"selector bigger then intial string": testData{initialStr: "hello", selector: utils.IntPtr(7), response: "hello"},
+		"empty string":                        testData{initialStr: "", response: ""},
+		"last without selector":               testData{initialStr: "hello", response: "o"},
+		"last with selector":                  testData{initialStr: "hello", selector: utils.IntPtr(1), response: "o"},
+		"last two":                            testData{initialStr: "hello", selector: utils.IntPtr(2), response: "lo"},
+		"zero":                                testData{initialStr: "hello", selector: utils.IntPtr(0), response: ""},
+		"all":                                 testData{initialStr: "hello", selector: utils.IntPtr(6), response: "hello"},
+		"selector bigger then initial string": testData{initialStr: "hello", selector: utils.IntPtr(7), response: "hello"},
 	}
 
 	for k, v := range examples {

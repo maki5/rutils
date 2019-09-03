@@ -188,10 +188,10 @@ func TestIndex(t *testing.T) {
 	}
 
 	examples := map[string]testData{
-		"empty arr":                  testData{arr: []string{}, selector: "s", response: -1},
-		"empty selector":             testData{arr: []string{}, selector: "", response: -1},
-		"one occurence in arr":       testData{arr: []string{"str1", "str4"}, selector: "str1", response: 0},
-		"multiple occurences in arr": testData{arr: []string{"str1", "str4", "str1"}, selector: "str1", response: 0},
+		"empty arr":                   testData{arr: []string{}, selector: "s", response: -1},
+		"empty selector":              testData{arr: []string{}, selector: "", response: -1},
+		"one occurrence in arr":       testData{arr: []string{"str1", "str4"}, selector: "str1", response: 0},
+		"multiple occurrences in arr": testData{arr: []string{"str1", "str4", "str1"}, selector: "str1", response: 0},
 	}
 
 	for k, v := range examples {
