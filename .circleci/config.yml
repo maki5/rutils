@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.12.9
+    working_directory: /go/src/github.com/maki5/rutils
+    steps:
+      - checkout
+      - run:
+          name: run tests
+          command: |
+            go fmt ./...
+            go vet ./...
+            go test -v ./...
