@@ -5,6 +5,7 @@ import (
 	"strconv"
 )
 
+// IntArray alias type for []int
 type IntArray []int
 
 // Delete deletes int element from array of ints

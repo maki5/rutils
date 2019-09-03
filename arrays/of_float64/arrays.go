@@ -5,6 +5,7 @@ import (
 	"strconv"
 )
 
+// FloatArray alias type for []float64
 type FloatArray []float64
 
 // Delete deletes float element from array of floats

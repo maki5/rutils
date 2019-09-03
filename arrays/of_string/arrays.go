@@ -7,6 +7,7 @@ import (
 	"github.com/maki5/rutils"
 )
 
+// StringArray alias type for []string
 type StringArray []string
 
 // Delete deletes string element from array of strings
