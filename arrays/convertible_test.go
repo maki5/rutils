@@ -1,10 +1,11 @@
 package arrays
 
 import (
-	arrayOfFloats "mlab/rutils/arrays/of_float64"
-	arrayOfInts "mlab/rutils/arrays/of_int"
-	arrayOfStrings "mlab/rutils/arrays/of_string"
 	"testing"
+
+	arrayOfFloats "github.com/maki5/rutils/arrays/of_float64"
+	arrayOfInts "github.com/maki5/rutils/arrays/of_int"
+	arrayOfStrings "github.com/maki5/rutils/arrays/of_string"
 )
 
 func TestConvertible(t *testing.T) {

@@ -2,8 +2,9 @@ package arrays
 
 import (
 	"encoding/json"
-	"mlab/rutils"
 	"strconv"
+
+	"github.com/maki5/rutils"
 )
 
 type StringArray []string

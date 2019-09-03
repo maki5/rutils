@@ -1,10 +1,11 @@
 package arrays
 
 import (
-	"mlab/rutils"
 	"reflect"
 	"sort"
 	"testing"
+
+	"github.com/maki5/rutils"
 )
 
 func TestDelete(t *testing.T) {

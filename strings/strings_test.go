@@ -1,8 +1,9 @@
 package strings
 
 import (
-	utils "mlab/rutils"
 	"testing"
+
+	utils "github.com/maki5/rutils"
 )
 
 func TestAt(t *testing.T) {

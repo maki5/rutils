@@ -2,10 +2,12 @@ package strings
 
 import (
 	"fmt"
-	"mlab/rutils"
-	arrayOfStrings "mlab/rutils/arrays/of_string"
 	strings2 "strings"
 	"unicode"
+
+	"github.com/maki5/rutils"
+
+	arrayOfStrings "github.com/maki5/rutils/arrays/of_string"
 )
 
 //At returns the substring of provided position
