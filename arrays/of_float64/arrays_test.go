@@ -96,7 +96,7 @@ func TestClear(t *testing.T) {
 
 func TestCollect(t *testing.T) {
 	type testData struct {
-		arr      []float64
+		arr      FloatArray
 		execFunc func(el float64) float64
 		response []float64
 	}
@@ -120,8 +120,7 @@ func TestCollect(t *testing.T) {
 	}
 
 	for k, v := range examples {
-		arr := FloatArray(v.arr)
-		newArr := arr.Collect(v.execFunc)
+		newArr := v.arr.Collect(v.execFunc)
 
 		if !reflect.DeepEqual(newArr, v.response) {
 			t.Errorf("test [%v] failed on method Collect with params(initialArr: %v), expected to be %v got %v",
@@ -132,7 +131,7 @@ func TestCollect(t *testing.T) {
 
 func TestConcat(t *testing.T) {
 	type testData struct {
-		arr            []float64
+		arr            FloatArray
 		arraysToConcat [][]float64
 		response       []float64
 	}
@@ -146,7 +145,7 @@ func TestConcat(t *testing.T) {
 	}
 
 	for k, v := range examples {
-		initialArr := FloatArray(v.arr)
+		initialArr := v.arr
 		initialArr.Concat(v.arraysToConcat...)
 
 		if !reflect.DeepEqual([]float64(initialArr), v.response) {
@@ -158,7 +157,7 @@ func TestConcat(t *testing.T) {
 
 func TestIndex(t *testing.T) {
 	type testData struct {
-		arr      []float64
+		arr      FloatArray
 		selector float64
 		response *int
 	}
@@ -170,7 +169,7 @@ func TestIndex(t *testing.T) {
 	}
 
 	for k, v := range examples {
-		initialArr := FloatArray(v.arr)
+		initialArr := v.arr
 		resp := initialArr.Index(v.selector)
 
 		if resp != v.response {
